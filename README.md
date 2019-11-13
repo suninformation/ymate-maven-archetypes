@@ -1,0 +1,1 @@
+### ymate-maven-archetypes

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>${rootArtifactId}-parent</artifactId>
+        <groupId>${groupId}</groupId>
+        <version>${version}</version>
+    </parent>
+
+    <artifactId>${artifactId}</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${artifactId}</name>
+    <url>https://www.ymate.net/</url>
+    <description>YMP Module Starter Archetype</description>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <!--
+                    <exclude>**/ymp-*.properties</exclude>
+                    -->
+                </excludes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <!-- If you need an executable jar file:
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <classpathPrefix>lib/</classpathPrefix>
+                                <mainClass>${package}.Main</mainClass>
+                            </manifest>
+                            -->
+                            <manifestSections>
+                                <manifestSection>
+                                    <name>${artifactId}</name>
+                                </manifestSection>
+                            </manifestSections>
+                            <manifestEntries>
+                                <Specification-Version>${project.version}</Specification-Version>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Version>${maven.build.timestamp}</Implementation-Version>
+                                <Implementation-Vendor>www.ymate.net</Implementation-Vendor>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!-- If you need an executable jar file:
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${rootArtifactId}</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>
