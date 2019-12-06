@@ -20,6 +20,7 @@
     <modules>
         <module>ymate-archetype-module</module>
         <module>ymate-archetype-quickstart</module>
+        <module>ymate-archetype-webapp</module>
     </modules>
 
     <developers>
