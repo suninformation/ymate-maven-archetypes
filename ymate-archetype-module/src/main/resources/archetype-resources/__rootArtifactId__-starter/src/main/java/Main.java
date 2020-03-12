@@ -15,10 +15,14 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Main {
 
+    static {
+        System.setProperty(IApplication.SYSTEM_MAIN_CLASS, Main.class.getName());
+    }
+
     private static final Log LOG = LogFactory.getLog(Main.class);
 
     public static void main(String[] args) throws Exception {
-        try (IApplication application = YMP.run(Main.class, args)) {
+        try (IApplication application = YMP.run(args)) {
             if (application.isInitialized()) {
                 LOG.info("Everything depends on ability!  -- YMP :)");
             }
