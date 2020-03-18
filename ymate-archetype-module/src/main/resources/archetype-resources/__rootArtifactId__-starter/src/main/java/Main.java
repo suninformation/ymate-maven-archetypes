@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class Main {
 
     static {
-        System.setProperty(IApplication.SYSTEM_MAIN_CLASS, Main.class.getName());
+        System.setProperty(IApplication.SYSTEM_MAIN_CLASS, Starter.class.getName());
     }
 
     private static final Log LOG = LogFactory.getLog(Main.class);

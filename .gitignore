@@ -7,7 +7,7 @@
 *.classpath
 *.iml
 
-bin/
+#bin/
 lib/
 target/
 

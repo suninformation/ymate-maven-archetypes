@@ -171,6 +171,16 @@
             -->
             <dependency>
                 <groupId>net.ymate.platform</groupId>
+                <artifactId>ymate-platform-configuration</artifactId>
+                <version>${ymate.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ymate.platform</groupId>
+                <artifactId>ymate-platform-log</artifactId>
+                <version>${ymate.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ymate.platform</groupId>
                 <artifactId>ymate-platform-core</artifactId>
                 <version>${ymate.platform.version}</version>
             </dependency>
