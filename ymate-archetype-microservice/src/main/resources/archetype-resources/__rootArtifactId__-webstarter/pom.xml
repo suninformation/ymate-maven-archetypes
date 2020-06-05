@@ -17,7 +17,7 @@
     <description>YMP Microservice WebStarter Archetype</description>
 
     <build>
-        <finalName>${artifactId}-webstarter</finalName>
+        <finalName>${artifactId}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
