@@ -25,7 +25,9 @@
                     <!--
                     <exclude>**/ymp-*.properties</exclude>
                     -->
+                    <exclude>**/ymp-conf_DEV.properties</exclude>
                 </excludes>
+                <filtering>false</filtering>
             </resource>
         </resources>
         <pluginManagement>
