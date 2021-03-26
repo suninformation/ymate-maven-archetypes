@@ -2,9 +2,9 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app id="${artifactId}" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <listener>
         <listener-class>net.ymate.platform.webmvc.support.WebAppEventListener</listener-class>
@@ -59,30 +59,33 @@
     通过这个方法，客户端可以在采取具体资源请求之前，决定对该资源采取何种必要措施，或者了解服务器的性能。
     OPTIONS 方法可能会暴露一些敏感信息，这些信息将帮助攻击者准备更进一步的攻击。
     -->
+    <!--
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>RequestMethodDenied</web-resource-name>
+            <web-resource-name>RequestMethodAllowed</web-resource-name>
             <url-pattern>/*</url-pattern>
-            <!--
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>OPTIONS</http-method>
-            -->
-            <http-method>PUT</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>TRACE</http-method>
-            <http-method>DELETE</http-method>
-            <http-method>SEARCH</http-method>
-            <http-method>COPY</http-method>
-            <http-method>MOVE</http-method>
-            <http-method>PROPFIND</http-method>
-            <http-method>PROPPATCH</http-method>
-            <http-method>MKCOL</http-method>
-            <http-method>LOCK</http-method>
-            <http-method>UNLOCK</http-method>
+            <http-method-omission>GET</http-method-omission>
+            <http-method-omission>POST</http-method-omission>
+            <http-method-omission>OPTIONS</http-method-omission>
+            <http-method-omission>PUT</http-method-omission>
+            <http-method-omission>HEAD</http-method-omission>
+            <http-method-omission>TRACE</http-method-omission>
+            <http-method-omission>DELETE</http-method-omission>
+            <http-method-omission>SEARCH</http-method-omission>
+            <http-method-omission>COPY</http-method-omission>
+            <http-method-omission>MOVE</http-method-omission>
+            <http-method-omission>PROPFIND</http-method-omission>
+            <http-method-omission>PROPPATCH</http-method-omission>
+            <http-method-omission>MKCOL</http-method-omission>
+            <http-method-omission>LOCK</http-method-omission>
+            <http-method-omission>UNLOCK</http-method-omission>
         </web-resource-collection>
         <auth-constraint/>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
+    -->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
