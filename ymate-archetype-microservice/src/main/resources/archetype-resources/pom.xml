@@ -140,6 +140,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-archetype-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
@@ -183,7 +184,7 @@
             </dependency>
             <dependency>
                 <groupId>net.ymate.platform</groupId>
-                <artifactId>ymate-platform-log</artifactId>
+                <artifactId>ymate-platform-starter</artifactId>
                 <version>${ymate.platform.version}</version>
             </dependency>
             <dependency>
@@ -219,6 +220,11 @@
             <dependency>
                 <groupId>net.ymate.port</groupId>
                 <artifactId>ymate-port-protocol-http</artifactId>
+                <version>${ymate.port.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ymate.port</groupId>
+                <artifactId>ymate-port-protocol-http-tomcat</artifactId>
                 <version>${ymate.port.version}</version>
             </dependency>
         </dependencies>

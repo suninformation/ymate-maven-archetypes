@@ -55,6 +55,17 @@
     -->
 
     <!--
+    <servlet>
+        <servlet-name>DispatchServlet</servlet-name>
+        <servlet-class>net.ymate.port.protocol.http.support.DispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DispatchServlet</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+    -->
+
+    <!--
     OPTIONS 方法是用于请求获得由 Request-URI 标识的资源在请求/响应的通信过程中可以使用的功能选项。
     通过这个方法，客户端可以在采取具体资源请求之前，决定对该资源采取何种必要措施，或者了解服务器的性能。
     OPTIONS 方法可能会暴露一些敏感信息，这些信息将帮助攻击者准备更进一步的攻击。
