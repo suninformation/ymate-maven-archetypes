@@ -6,13 +6,13 @@
 
 目前支持构建以下四种项目类型：
 
-- **Quickstart：**标准 Java 工程，已集成 YMP 核心依赖和参数配置；
+- **Quickstart：** 标准 Java 工程，已集成 YMP 核心依赖和参数配置；
 
-- **Webapp：**标准 JavaWeb 工程，已集成 WebMVC 相关依赖和参数配置；
+- **Webapp：** 标准 JavaWeb 工程，已集成 WebMVC 相关依赖和参数配置；
 
-- **Module：**标准 Maven 多模块工程，已集成 Assembly 插件的自定义打包规则和命令行启动脚本；
+- **Module：** 标准 Maven 多模块工程，已集成 Assembly 插件的自定义打包规则和命令行启动脚本；
 
-- **Microservice：**基于 YMP 框架的微服务多模块工程（***暂仅内部使用***）；
+- **Microservice：** 基于 YMP 框架的微服务多模块工程（***暂仅内部使用***）；
 
 
 
