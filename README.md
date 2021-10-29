@@ -132,7 +132,7 @@ Choose a number or apply filter (format: [groupId:]artifactId, case sensitive co
 
 ### STEP 2：选择模板并按提示设置
 
-本例演示如何创建并运行 Web 工程，所以此处按屏幕提示应选择 `4` 号模板类型，输入数字并按屏幕提示设置坐标系等信息，如下所示：
+本例演示如何创建 Web 工程，所以此处按屏幕提示应选择 `4` 号模板类型，输入数字并按屏幕提示设置坐标系等信息，如下所示：
 
 ```shell
 Define value for property 'groupId': : net.ymate.platform.examples
