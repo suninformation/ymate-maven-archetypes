@@ -18,19 +18,9 @@
 
 ## 安装与配置
 
-本项目依赖于 [Maven](http://maven.apache.org/) 环境，假设你已具备，编写本文所使用的 Maven 版本为：
+本项目依赖于 [Maven](http://maven.apache.org/) 环境，假设你已具备，编写本文所使用的 Maven 版本为：Apache Maven 3.1.1
 
-```shell
-$ mvn -version
-Apache Maven 3.1.1 (0728685237757ffbf44136acec0402957f723d9a; 2013-09-17 23:22:22+0800)
-Maven home: /Users/....../Java/apache-maven-3.1.1
-Java version: 1.8.0_271, vendor: Oracle Corporation
-Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_271.jdk/Contents/Home/jre
-Default locale: zh_CN, platform encoding: UTF-8
-OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
-```
-
-由于本项目仍在不断的优化和完善中，因此并未提交至 Maven 中央库，所以在首次使用时需要下载源码并安装到本地 Maven 仓库中，操作步骤如下：
+由于本项目仍在不断地优化和完善中，因此并未提交至 Maven 中央库，所以在首次使用时需要下载源码并安装到本地 Maven 仓库中，操作步骤如下：
 
 
 
