@@ -106,6 +106,12 @@
                         <include>**/*.properties</include>
                     </includes>
                 </fileSet>
+                <fileSet encoding="UTF-8">
+                    <directory>src/main/webapp</directory>
+                    <includes>
+                        <include>**/*.css</include>
+                    </includes>
+                </fileSet>
             </fileSets>
         </module>
     </modules>
