@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>${parentArtifactId}-api</name>
-    <url>http://www.ymate.net/</url>
+    <url>https://www.ymate.net/</url>
     <description>YMP Microservice API Archetype</description>
 
     <build>

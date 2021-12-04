@@ -9,7 +9,7 @@
     <version>${version}</version>
 
     <name>${artifactId}</name>
-    <url>http://www.ymate.net/</url>
+    <url>https://www.ymate.net/</url>
     <description>YMP Webapp Archetype</description>
 
     <properties>
