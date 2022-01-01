@@ -16,6 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ymate.platform.version>2.1.0</ymate.platform.version>
+        <ymate.platform.test.version>1.0.0</ymate.platform.test.version>
         <ymate.maven.plugin.version>1.0.0</ymate.maven.plugin.version>
     </properties>
 
@@ -163,7 +164,6 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
             <!--
             <plugin>
                 <groupId>net.ymate.maven.plugins</groupId>
@@ -171,13 +171,11 @@
                 <version>${ymate.maven.plugin.version}</version>
             </plugin>
             -->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-archetype-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
-
             <!-- If you need an executable jar file:
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -207,6 +205,14 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        -->
         <!--
         <dependency>
             <groupId>org.apache.commons</groupId>

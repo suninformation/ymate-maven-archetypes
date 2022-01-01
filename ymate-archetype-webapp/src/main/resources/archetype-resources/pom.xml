@@ -15,21 +15,64 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ymate.platform.version>2.1.0</ymate.platform.version>
+        <ymate.platform.test.version>1.0.0</ymate.platform.test.version>
         <ymate.maven.plugin.version>1.0.0</ymate.maven.plugin.version>
+        <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
+        <ymate.module.embed.version>1.0.2</ymate.module.embed.version>
+        <tomcat.version>9.0.56</tomcat.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>h2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <connection_url>jdbc:h2:&#36;{root}/db/data;MODE=MySQL;DATABASE_TO_LOWER=TRUE</connection_url>
+                <adapter_class/>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>2.0.204</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <connection_url>jdbc:mysql://localhost:3306/db_name?useUnicode=true&amp;useSSL=false&amp;characterEncoding=UTF-8</connection_url>
+                <adapter_class>dbcp</adapter_class>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-dbcp2</artifactId>
+                    <version>2.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.48</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>${artifactId}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
                 <excludes>
                     <!--
                     <exclude>**/ymp-*.properties</exclude>
                     -->
                     <exclude>**/ymp-conf_DEV.properties</exclude>
                 </excludes>
-                <filtering>false</filtering>
             </resource>
         </resources>
         <plugins>
@@ -62,6 +105,113 @@
                 <artifactId>maven-archetype-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@{*}</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <archive>
+                        <manifest>
+                            <mainClass>net.ymate.module.embed.Main</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${maven.build.timestamp}</Implementation-Version>
+                            <Implementation-Vendor>www.ymate.net</Implementation-Vendor>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>embedded-main</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>net.ymate.module</includeGroupIds>
+                            <includeArtifactIds>ymate-module-embed</includeArtifactIds>
+                            <includeScope>provided</includeScope>
+                            <includes>**/*.class</includes>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.apache.tomcat</groupId>
+                                    <artifactId>tomcat-annotations-api</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.tomcat.embed</groupId>
+                                    <artifactId>tomcat-embed-core</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.tomcat.embed</groupId>
+                                    <artifactId>tomcat-embed-jasper</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.tomcat.embed</groupId>
+                                    <artifactId>tomcat-embed-el</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.tomcat.embed</groupId>
+                                    <artifactId>tomcat-embed-websocket</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jdt</groupId>
+                                    <artifactId>ecj</artifactId>
+                                    <version>3.12.3</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.ymate.module</groupId>
+                                    <artifactId>ymate-module-embed-tomcat</artifactId>
+                                    <version>${ymate.module.embed.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF/dependencies</outputDirectory>
+                            <stripVersion>false</stripVersion>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
         </plugins>
     </build>
 
@@ -72,6 +222,14 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -91,21 +249,24 @@
         </dependency>
         <!--
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.8.0</version>
+            <groupId>net.ymate.module</groupId>
+            <artifactId>ymate-module-embed-tomcat</artifactId>
+            <version>${ymate.module.embed.version}</version>
+            <scope>provided</scope>
         </dependency>
+        -->
+        <!--
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.48</version>
+            <groupId>net.ymate.module</groupId>
+            <artifactId>ymate-module-websocket</artifactId>
+            <version>${ymate.module.websocket.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-persistence-jdbc</artifactId>
             <version>${ymate.platform.version}</version>
         </dependency>
-        -->
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-starter-web</artifactId>
