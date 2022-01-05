@@ -127,9 +127,16 @@
                 <configuration>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <archive>
+                        <!--
                         <manifest>
                             <mainClass>net.ymate.module.embed.Main</mainClass>
                         </manifest>
+                        -->
+                        <manifestSections>
+                            <manifestSection>
+                                <name>${artifactId}</name>
+                            </manifestSection>
+                        </manifestSections>
                         <manifestEntries>
                             <Specification-Version>${project.version}</Specification-Version>
                             <Implementation-Title>${project.name}</Implementation-Title>
