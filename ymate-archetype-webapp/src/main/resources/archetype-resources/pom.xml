@@ -17,6 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ymate.platform.version>2.1.0</ymate.platform.version>
         <ymate.platform.test.version>1.0.0</ymate.platform.test.version>
+        <ymate.apidocs.version>2.0.0</ymate.apidocs.version>
         <ymate.maven.plugin.version>1.0.0</ymate.maven.plugin.version>
         <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
         <ymate.module.embed.version>1.0.2</ymate.module.embed.version>
@@ -255,6 +256,13 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>net.ymate.apidocs</groupId>
+            <artifactId>ymate-apidocs-annotation</artifactId>
+            <version>${ymate.apidocs.version}</version>
+        </dependency>
+        -->
         <!--
         <dependency>
             <groupId>net.ymate.module</groupId>
