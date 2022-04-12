@@ -102,6 +102,12 @@ mvn archetype:generate -DarchetypeCatalog=local
 > ```
 >
 > *（注：该方法适用于 Linux 和 Mac OS）*
+> 
+> 在 Windows 系统环境下，可以在 JDK 或 Maven 的 bin 目录下创建 `createprj.cmd` 文件，其内容如下：
+>
+> ```shell
+> mvn archetype:generate -DarchetypeCatalog=local
+> ```
 
 
 
@@ -153,7 +159,7 @@ package: net.ymate.platform.examples
 
 YMP 不仅提供便捷的 Web 及其它 Java 项目的快速开发体验，也将不断提供更多丰富的项目实践经验。
 
-感兴趣的小伙伴儿们可以加入官方 QQ 群：480374360，一起交流学习，帮助 YMP 成长！
+感兴趣的小伙伴儿们可以加入官方 QQ 群：[480374360](https://qm.qq.com/cgi-bin/qm/qr?k=3KSXbRoridGeFxTVA8HZzyhwU_btZQJ2)，一起交流学习，帮助 YMP 成长！
 
 如果喜欢 YMP，希望得到你的支持和鼓励！
 
