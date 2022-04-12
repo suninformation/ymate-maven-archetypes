@@ -15,13 +15,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ymate.platform.version>2.1.0</ymate.platform.version>
+        <ymate.platform.version>2.1.1</ymate.platform.version>
         <ymate.platform.test.version>1.0.0</ymate.platform.test.version>
         <ymate.apidocs.version>2.0.0</ymate.apidocs.version>
-        <ymate.maven.plugin.version>1.0.0</ymate.maven.plugin.version>
+        <ymate.maven.plugin.version>1.0.1</ymate.maven.plugin.version>
         <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
         <ymate.module.embed.version>1.0.2</ymate.module.embed.version>
-        <tomcat.version>9.0.58</tomcat.version>
+        <tomcat.version>9.0.62</tomcat.version>
     </properties>
 
     <profiles>
@@ -57,7 +57,7 @@
                 <dependency>
                     <groupId>mysql</groupId>
                     <artifactId>mysql-connector-java</artifactId>
-                    <version>5.1.49</version>
+                    <version>8.0.28</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -95,13 +95,11 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>net.ymate.maven.plugins</groupId>
                 <artifactId>ymate-maven-plugin</artifactId>
                 <version>${ymate.maven.plugin.version}</version>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-archetype-plugin</artifactId>
@@ -128,11 +126,9 @@
                 <configuration>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <archive>
-                        <!--
                         <manifest>
                             <mainClass>net.ymate.module.embed.Main</mainClass>
                         </manifest>
-                        -->
                         <manifestSections>
                             <manifestSection>
                                 <name>${artifactId}</name>
@@ -147,7 +143,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -203,7 +198,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.jdt</groupId>
                                     <artifactId>ecj</artifactId>
-                                    <version>3.12.3</version>
+                                    <version>3.18.0</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.ymate.module</groupId>
@@ -220,7 +215,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 
@@ -256,21 +250,17 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!--
         <dependency>
             <groupId>net.ymate.apidocs</groupId>
             <artifactId>ymate-apidocs-annotation</artifactId>
             <version>${ymate.apidocs.version}</version>
         </dependency>
-        -->
-        <!--
         <dependency>
             <groupId>net.ymate.module</groupId>
             <artifactId>ymate-module-embed-tomcat</artifactId>
             <version>${ymate.module.embed.version}</version>
             <scope>provided</scope>
         </dependency>
-        -->
         <!--
         <dependency>
             <groupId>net.ymate.module</groupId>

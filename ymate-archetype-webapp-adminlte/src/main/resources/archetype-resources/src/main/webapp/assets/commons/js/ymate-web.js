@@ -991,7 +991,7 @@
             regional: {
                 'zh_CN': {
                     currentPage: '第 {0} / {1} 页',
-                    recordsTotal: '总计录数: {0}'
+                    recordsTotal: '总记录数: {0}'
                 }
             },
             totalPages: 0,
