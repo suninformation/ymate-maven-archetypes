@@ -16,14 +16,16 @@
         <module>${artifactId}-api</module>
         <module>${artifactId}-impl</module>
         <module>${artifactId}-starter</module>
-        <module>${artifactId}-webstarter</module>
+        <module>${artifactId}-starter-web</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ymate.platform.version>2.1.1</ymate.platform.version>
-        <ymate.port.version>1.1-SNAPSHOT</ymate.port.version>
+        <ymate.port.version>2.0.0</ymate.port.version>
         <ymate.maven.plugin.version>1.0.1</ymate.maven.plugin.version>
+        <ymate.module.embed.version>1.0.2</ymate.module.embed.version>
+        <tomcat.version>9.0.65</tomcat.version>
     </properties>
 
     <!--
@@ -213,6 +215,12 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>net.ymate.module</groupId>
+                <artifactId>ymate-module-embed-tomcat</artifactId>
+                <version>${ymate.module.embed.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>net.ymate.port</groupId>
                 <artifactId>ymate-port-core</artifactId>
                 <version>${ymate.port.version}</version>
@@ -220,11 +228,6 @@
             <dependency>
                 <groupId>net.ymate.port</groupId>
                 <artifactId>ymate-port-protocol-http</artifactId>
-                <version>${ymate.port.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.port</groupId>
-                <artifactId>ymate-port-protocol-http-tomcat</artifactId>
                 <version>${ymate.port.version}</version>
             </dependency>
         </dependencies>

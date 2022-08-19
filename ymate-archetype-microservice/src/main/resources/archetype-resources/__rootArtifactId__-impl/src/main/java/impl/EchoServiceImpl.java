@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author YMP (https://www.ymate.net/)
  */
-@PortService
+@PortService(value = IEchoService.class)
 public class EchoServiceImpl implements IEchoService {
 
     @Inject

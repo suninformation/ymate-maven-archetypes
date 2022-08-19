@@ -82,8 +82,8 @@
                 </fileSet>
             </fileSets>
         </module>
-        <module id="${rootArtifactId}-webstarter" dir="__rootArtifactId__-webstarter"
-                name="${rootArtifactId}-webstarter">
+        <module id="${rootArtifactId}-starter-web" dir="__rootArtifactId__-starter-web"
+                name="${rootArtifactId}-starter-web">
             <fileSets>
                 <fileSet filtered="true" packaged="true" encoding="UTF-8">
                     <directory>src/main/java</directory>
