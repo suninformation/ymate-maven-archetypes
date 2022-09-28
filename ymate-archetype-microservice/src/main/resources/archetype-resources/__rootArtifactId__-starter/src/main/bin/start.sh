@@ -18,7 +18,16 @@ fi
 
 LIB_JARS=${symbol_dollar}(ls ${symbol_dollar}LIB_DIR | grep .jar | awk '{print "'${symbol_dollar}LIB_DIR'/"${symbol_dollar}0}' | tr "\n" ":")
 cd ${symbol_dollar}(dirname ${symbol_dollar}CURRENT_DIR)
-nohup java -Djava.net.preferIPv4Stack=true -Dymp.mainClass=${symbol_dollar}SERVER_NAME -server -Xms1g -Xmx1g -classpath ${symbol_dollar}LIB_JARS ${symbol_dollar}MAIN_CLASS nohup.out 2>&1 &
+
+JDK_JAVA_OPTIONS="${symbol_dollar}JDK_JAVA_OPTIONS --add-opens=java.base/java.lang=ALL-UNNAMED"
+JDK_JAVA_OPTIONS="${symbol_dollar}JDK_JAVA_OPTIONS --add-opens=java.base/java.io=ALL-UNNAMED"
+JDK_JAVA_OPTIONS="${symbol_dollar}JDK_JAVA_OPTIONS --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
+export JDK_JAVA_OPTIONS
+
+JAVA_TOOL_OPTIONS="${symbol_dollar}JAVA_TOOL_OPTIONS -Djava.net.preferIPv4Stack=true"
+export JAVA_TOOL_OPTIONS
+
+nohup java -Dymp.mainClass=${symbol_dollar}SERVER_NAME -server -Xms1g -Xmx1g -classpath .:${symbol_dollar}LIB_JARS ${symbol_dollar}MAIN_CLASS nohup.out 2>&1 &
 
 PIDS=${symbol_dollar}(ps -ef | grep java | grep "${symbol_dollar}LIB_DIR" | grep "${symbol_dollar}SERVER_NAME" | awk '{print ${symbol_dollar}2}')
 if [ -z "${symbol_dollar}PIDS" ]; then
