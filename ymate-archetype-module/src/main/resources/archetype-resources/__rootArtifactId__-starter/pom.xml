@@ -29,6 +29,10 @@
                 </excludes>
                 <filtering>false</filtering>
             </resource>
+            <resource>
+                <directory>src/main/cfgs</directory>
+                <targetPath>${project.build.directory}/cfgs</targetPath>
+            </resource>
         </resources>
         <plugins>
             <plugin>

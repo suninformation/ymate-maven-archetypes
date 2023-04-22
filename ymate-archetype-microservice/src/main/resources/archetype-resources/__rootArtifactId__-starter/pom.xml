@@ -28,6 +28,10 @@
                 </excludes>
                 <filtering>false</filtering>
             </resource>
+            <resource>
+                <directory>src/main/cfgs</directory>
+                <targetPath>${project.build.directory}/cfgs</targetPath>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -50,6 +54,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>net.ymate.port</groupId>
+                <artifactId>ymate-port-maven-plugin</artifactId>
+                <version>${ymate.port.version}</version>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>net.ymate.maven.plugins</groupId>
+                <artifactId>ymate-maven-plugin</artifactId>
+                <version>${ymate.maven.plugin.version}</version>
+            </plugin>
+            -->
         </plugins>
     </build>
 

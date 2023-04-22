@@ -48,6 +48,7 @@
                     <directory>src/main/cfgs</directory>
                     <includes>
                         <include>**/*.xml</include>
+                        <include>**/*.properties</include>
                     </includes>
                 </fileSet>
                 <fileSet filtered="true" encoding="UTF-8">
