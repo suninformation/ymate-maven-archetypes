@@ -2,7 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="${package}" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app id="${artifactId}" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
@@ -35,6 +35,15 @@
     <filter>
         <filter-name>DispatchFilter</filter-name>
         <filter-class>net.ymate.platform.webmvc.support.DispatchFilter</filter-class>
+        <!--
+        参数项 "requestIgnoreUrls" 用于配置需要排除的请求地址前缀，多个前缀之间用 "|" 分隔。
+        -->
+        <!--
+        <init-param>
+            <param-name>requestIgnoreUrls</param-name>
+            <param-value>/service1|/serviceN</param-value>
+        </init-param>
+        -->
     </filter>
     <filter-mapping>
         <filter-name>DispatchFilter</filter-name>
