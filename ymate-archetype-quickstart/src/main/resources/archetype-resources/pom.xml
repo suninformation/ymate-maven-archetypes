@@ -15,10 +15,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ymate.platform.version>2.1.1</ymate.platform.version>
-        <ymate.platform.test.version>1.0.0</ymate.platform.test.version>
-        <ymate.apidocs.version>2.0.0</ymate.apidocs.version>
-        <ymate.maven.plugin.version>1.0.1</ymate.maven.plugin.version>
+        <ymate.platform.version>2.1.2</ymate.platform.version>
+        <ymate.platform.test.version>1.0.1</ymate.platform.test.version>
+        <ymate.apidocs.version>2.0.1</ymate.apidocs.version>
+        <ymate.maven.plugin.version>1.0.2</ymate.maven.plugin.version>
     </properties>
 
     <!--
