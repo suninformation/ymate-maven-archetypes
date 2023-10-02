@@ -64,7 +64,7 @@
      * @returns {*}
      * @private
      */
-    function __format(str, text) {
+    window.__format = function (str, text) {
         var args = arguments;
         return str.replace(/{(\d+)}/g, function (m, i) {
             return args[parseInt(i) + 1];
@@ -140,7 +140,9 @@
 
         opts.error = function (XMLHttpRequest, textStatus, errorThrown) {
             console.debug("__error:" + opts.url + ", status:" + textStatus + ", errorThrown:" + errorThrown);
-            if (options.error) {
+            if (XMLHttpRequest['responseJSON'] && options.success) {
+                options.success(XMLHttpRequest['responseJSON'], textStatus, XMLHttpRequest);
+            } else if (options.error) {
                 options.error(XMLHttpRequest, textStatus, errorThrown);
             } else {
                 __commonsAjaxError(XMLHttpRequest, textStatus, errorThrown);
@@ -206,10 +208,302 @@
     };
 
     /**
+     * 图形验证码组件
+     *
+     * @param options
+     * @returns {{isEnabled: *, refresh: __refreshImg, clean: __clean, enabled: __enabled}}
+     */
+    $.fn.captcha = function (options) {
+
+        var defaults = {
+            // 图片请求URL地址
+            url: "captcha",
+            // 验证码文本域Id或对象
+            captchaField: 'input[name="captcha"]',
+            // 创建时是否请求图片
+            refresh: true,
+            // 是否禁用
+            disabled: false,
+            // 验证码图片按钮Id或对象
+            captchaBtn: "#_captchaImg",
+            // 用于存放验证码HTML段的模板Id
+            templateId: "_captcha_template",
+            // 用于放置HTML的标签容器Id
+            container: "#_captcha_container"
+        };
+
+        var opts = $.extend({}, defaults, options);
+
+        var __target = $(this);
+
+        var __flag = false;
+
+        if (!opts.disabled) {
+            if (opts.container && opts.captchaBtn) {
+                __enabled();
+            }
+            //
+            __target.on("click", __refreshImg);
+
+            if (opts.refresh) {
+                __refreshImg();
+            }
+        }
+
+        function __refreshImg() {
+            if (!opts.disabled) {
+                var _v = "_v=" + Date.now();
+                if (opts.url.indexOf("?") > 0) {
+                    _v = "&" + _v;
+                } else {
+                    _v = "?" + _v;
+                }
+                __target.attr("src", opts.url + _v);
+            }
+        }
+
+        function __clean() {
+            if (!opts.disabled) {
+                if (opts.captchaField) {
+                    $(opts.captchaField).val('');
+                }
+            }
+        }
+
+        function __enabled() {
+            if (!__flag && opts.templateId && opts.container) {
+                opts.disabled = false;
+                __flag = true;
+                //
+                var _content = tmpl(opts.templateId, {});
+                $(opts.container).append(_content);
+                //
+                __target = $(opts.captchaBtn).on("click", __refreshImg);
+                //
+                if (opts.refresh) {
+                    __refreshImg();
+                }
+            }
+        }
+
+        function __isEnabled() {
+            return !opts.disabled;
+        }
+
+        return {
+            refresh: __refreshImg,
+            clean: __clean,
+            enabled: __enabled,
+            isEnabled: __isEnabled()
+        }
+    };
+
+    /**
+     * 短信或邮件验证码发送组件
+     *
+     * @param options
+     * @returns {{captchaType: (string|*)}}
+     */
+    $.fn.captchaSender = function (options) {
+
+        var defaults = {
+            // 验证码类型：auto|sms|mail
+            type: "auto",
+            // 自定义动作标识
+            action: null,
+            // 验证码作用域
+            scope: null,
+            // 图片验证码请求URL地址
+            captcha_url: "captcha",
+            // 手机号码或邮件地址文本域ID或对象
+            targetField: null,
+            // 消息提示组件
+            messageShow: null,
+            // 重发等待时间(秒)
+            timeout: 120,
+            // 等待提示语
+            showText: "{0}秒后重发",
+            // 手机号码或邮件地址格式错误时的提示信息
+            formatErrorMsg: "数据格式不正确",
+            // 请求发送异常时的提示信息
+            errorMsg: "验证码发送失败，请稍后重试",
+            // 请求发送成功时的提示信息
+            successMsg: "验证码已发送，请注意查收",
+            // 回调方法, 格式: {error: function(...){...}, success:function(...){...}}
+            callback: null
+        };
+
+        var opts = $.extend({}, defaults, options);
+
+        var __timer;
+
+        var __targetBtn = $(this);
+
+        // 按钮原始文本内容
+        var __btnOriginalText = __targetBtn.text();
+
+        var __targetField = opts.targetField ? $(opts.targetField) : null;
+
+        if (__targetField && opts.messageShow) {
+            __targetBtn.on("click", __send).prop({disabled: !__checkTarget()});
+            __targetField.on("input", function (e) {
+                __targetBtn.prop({disabled: !__checkTarget()});
+            })
+        } else {
+            console.debug("CaptchaSender initialization failed.")
+        }
+
+        $("#_captcha_modal_container").append(tmpl("_captcha_modal_template", {
+            "type": opts.type,
+            "action": opts.action
+        }));
+
+        var __messageShow = $('#_sendCaptchaMessage').messageShow();
+
+        var __modal = $("#_sendCaptchaModal").modal({keyboard: false, backdrop: "static", show: false});
+
+        var __captcha = $('#_captchaSendImg').captcha({
+            url: opts.captcha_url,
+            captchaField: '#_captcha_send_field',
+            captchaBtn: "#_captchaSendImg",
+            templateId: "_captcha_send_template",
+            container: "#_send_captcha_container"
+        });
+
+        var __captchaField = $("#_captcha_send_field");
+
+        __modal.on("shown.bs.modal", function (e) {
+            __messageShow.clean();
+            __captcha.clean();
+            __captcha.refresh();
+            __captchaField.focus();
+        });
+
+        var __captchaType = opts.type === "auto" ? null : opts.type;
+
+        function __checkTarget() {
+            var _targetValue = __targetField.val();
+            if (_targetValue) {
+                var _sms = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[0-9])|(18[0-9]))\d{8}$/.test(_targetValue);
+                var _mail = /^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,8}$/.test(_targetValue);
+                if (opts.type === "auto") {
+                    if (_sms) {
+                        __captchaType = "sms";
+                        return true;
+                    } else if (_mail) {
+                        __captchaType = "mail";
+                        return true;
+                    }
+                } else if (opts.type === "sms") {
+                    return _sms;
+                } else if (opts.type === "mail") {
+                    return _mail;
+                }
+            }
+            return false;
+        }
+
+        function __reset() {
+            if (__timer) {
+                window.clearInterval(__timer);
+                __targetBtn.text(__btnOriginalText).prop({disabled: !__checkTarget()});
+            }
+        }
+
+        function __send() {
+            if (!__checkTarget()) {
+                opts.messageShow.show(opts.formatErrorMsg);
+            } else {
+                __modal.modal("show");
+                //
+                var _form = $("#_sendCaptchaForm");
+                if (_form) {
+                    _form[0].reset();
+                    _form.validator({
+                        delay: 500,
+                        html: true,
+                        disable: false,
+                        focus: true
+                    }).on("submit", function (e) {
+                        if (!e.isDefaultPrevented()) {
+                            e.preventDefault();
+                            //
+                            __targetBtn.prop({disabled: true});
+                            //
+                            var __time = opts.timeout ? opts.timeout : 120;
+                            __timer = window.setInterval(function () {
+                                __targetBtn.text(__format(opts.showText, __time));
+                                if (__time < 1) {
+                                    __reset();
+                                }
+                                __time--;
+                            }, 1000);
+                            //
+                            var _data = {};
+                            _data.captcha = __captchaField.val();
+                            if (opts.action) {
+                                _data.action = opts.action;
+                            }
+                            if (opts.scope) {
+                                _data.scope = opts.scope;
+                            }
+                            if (__captchaType === "sms") {
+                                _data.mobile = __targetField.val();
+                            } else if (__captchaType === "mail") {
+                                _data.email = __targetField.val();
+                            }
+                            //
+                            $.requestSender({
+                                url: __format(_form.attr('action'), __captchaType),
+                                data: _data,
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    __reset();
+                                    if (opts.callback && opts.callback.error && opts.callback.error instanceof Function) {
+                                        opts.callback.error(XMLHttpRequest, textStatus, errorThrown)
+                                    } else if (opts.errorMsg) {
+                                        __messageShow.show(opts.errorMsg);
+                                    }
+                                },
+                                success: function (result, textStatus, jqXHR) {
+                                    if (result) {
+                                        if (result.ret !== 0) {
+                                            __reset();
+                                            if (result.ret === -50 || result.ret === -6) {
+                                                if (opts.errorMsg) {
+                                                    __messageShow.show(opts.errorMsg);
+                                                }
+                                            } else if (opts.callback && opts.callback.success && opts.callback.success instanceof Function) {
+                                                opts.callback.success(result, textStatus, jqXHR)
+                                            } else {
+                                                __parseResultErrorMsg(result, __messageShow);
+                                            }
+                                            __captcha.clean();
+                                            __captcha.refresh();
+                                        } else if (opts.successMsg) {
+                                            __modal.modal("hide");
+                                            opts.messageShow.show(opts.successMsg, "info");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }
+
+        return {
+            getCaptchaType: function () {
+                return __captchaType;
+            }
+        }
+    };
+
+    /**
      * 表单处理器
      *
      * @param options
-     * @returns {{getForm: (function(): *|jQuery|HTMLElement), getMessageShow: (function(): *), reset: __reset, getFormData: (function(): *), getOptions: (function(): *), getValidate: (function(): *)}}
+     * @returns {{getForm: (function(): *|jQuery|HTMLElement), getMessageShow: (function(): null), reset: __reset, getFormData: (function(): *), getOptions: (function(): *), getValidate: (function(): *)}}
      */
     $.fn.submitter = function (options) {
 
@@ -220,6 +514,24 @@
             action: '',
             method: '',
             timeout: 0,
+            validator: {
+                delay: 500,
+                html: true,
+                disable: false,
+                focus: true
+                // feedback: {
+                //     success: 'glyphicon-ok',
+                //     error: 'glyphicon-remove'
+                // },
+                // custom: {
+                //     equals: function ($el) {
+                //         var matchValue = $el.data("equals"); // foo
+                //         if ($el.val() !== matchValue) {
+                //             return "Hey, that's not valid! It's gotta be " + matchValue;
+                //         }
+                //     }
+                // }
+            },
             validation: {
                 enabled: false,
                 rules: {},
@@ -255,8 +567,11 @@
                 }
             };
             __formValidate = __form.validate($.extend({}, validationOpts, opts.validation));
+        } else if (opts.validator) {
+            __form.validator(opts.validator).on("submit", __onSubmit);
+        } else {
+            __form.on("submit", __onSubmit);
         }
-        __form.on("submit", __onSubmit);
 
         function __onSubmit(e) {
             if (!e.isDefaultPrevented()) {
@@ -1696,6 +2011,19 @@
         return _htmlStr;
     }
 
+    function __themeModeSet(targetEl) {
+        if (!document.body.classList.contains('dark-mode')) {
+            document.body.classList.add("dark-mode");
+        }
+        if (targetEl.classList.contains('navbar-light')) {
+            targetEl.classList.add('navbar-dark');
+            targetEl.classList.remove('navbar-light');
+            if (targetEl.classList.contains('navbar-white')) {
+                targetEl.classList.remove('navbar-white');
+            }
+        }
+    }
+
     $.themeSwitch = function () {
         var themeSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
         if (themeSwitch) {
@@ -1704,43 +2032,16 @@
                 var currentTheme = localStorage.getItem('theme');
                 if (currentTheme) {
                     if (currentTheme === 'dark') {
-                        if (!document.body.classList.contains('dark-mode')) {
-                            document.body.classList.add("dark-mode");
-                        }
-                        if (mainHeader.classList.contains('navbar-light')) {
-                            mainHeader.classList.add('navbar-dark');
-                            mainHeader.classList.remove('navbar-light');
-                            if (mainHeader.classList.contains('navbar-white')) {
-                                mainHeader.classList.remove('navbar-white');
-                            }
-                        }
+                        __themeModeSet(mainHeader);
                         themeSwitch.checked = true;
                     }
                 }
                 themeSwitch.addEventListener('change', function (e) {
                     if (e.target.checked) {
-                        if (!document.body.classList.contains('dark-mode')) {
-                            document.body.classList.add("dark-mode");
-                        }
-                        if (mainHeader.classList.contains('navbar-light')) {
-                            mainHeader.classList.add('navbar-dark');
-                            mainHeader.classList.remove('navbar-light');
-                            if (mainHeader.classList.contains('navbar-white')) {
-                                mainHeader.classList.remove('navbar-white');
-                            }
-                        }
+                        __themeModeSet(mainHeader);
                         localStorage.setItem('theme', 'dark');
                     } else {
-                        if (document.body.classList.contains('dark-mode')) {
-                            document.body.classList.remove("dark-mode");
-                        }
-                        if (mainHeader.classList.contains('navbar-dark')) {
-                            mainHeader.classList.add('navbar-light');
-                            mainHeader.classList.remove('navbar-dark');
-                            if (!mainHeader.classList.contains('navbar-white')) {
-                                mainHeader.classList.add('navbar-white');
-                            }
-                        }
+                        __themeModeSet(mainHeader);
                         localStorage.setItem('theme', 'light');
                     }
                 }, false);
@@ -2099,7 +2400,10 @@
             if (opts.sidebar.items) {
                 $("nav.mt-2 ul").sideNav({items: opts.sidebar.items});
             }
-            $('[data-widget="sidebar-search"]').SidebarSearch(opts.sidebar.search || {minLength: 1, notFoundText: '未找到'})
+            $('[data-widget="sidebar-search"]').SidebarSearch(opts.sidebar.search || {
+                minLength: 1,
+                notFoundText: '未找到'
+            })
         }
 
         if (opts.navbar) {
@@ -2321,7 +2625,7 @@ $(function () {
         __notifyShow().warn(msg || '请求响应未知错误，请稍后重试！');
     }
 
-    // 绑定夜间模式切换事件
+    // 绑定黑暗模式切换事件
     $.themeSwitch();
 
     $('[data-toggle="tooltip"]').tooltip();

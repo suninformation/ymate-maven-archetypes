@@ -21,7 +21,7 @@
         <ymate.maven.plugin.version>1.0.2</ymate.maven.plugin.version>
         <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
         <ymate.module.embed.version>1.0.3</ymate.module.embed.version>
-        <tomcat.version>9.0.76</tomcat.version>
+        <tomcat.version>9.0.80</tomcat.version>
     </properties>
 
     <profiles>

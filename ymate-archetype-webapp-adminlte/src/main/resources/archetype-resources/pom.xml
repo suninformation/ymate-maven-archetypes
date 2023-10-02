@@ -23,7 +23,7 @@
         <ymate.module.embed.version>1.0.3</ymate.module.embed.version>
         <ymate.web.taglib.version>1.0.0</ymate.web.taglib.version>
         <ymate.web.adminlte.assets.version>1.0.0</ymate.web.adminlte.assets.version>
-        <tomcat.version>9.0.76</tomcat.version>
+        <tomcat.version>9.0.80</tomcat.version>
     </properties>
 
     <profiles>
