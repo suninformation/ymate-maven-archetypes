@@ -21,11 +21,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ymate.platform.version>2.1.2</ymate.platform.version>
+        <ymate.platform.version>2.1.3-dev</ymate.platform.version>
         <ymate.port.version>2.0.0</ymate.port.version>
-        <ymate.maven.plugin.version>1.0.2</ymate.maven.plugin.version>
-        <ymate.module.embed.version>1.0.3</ymate.module.embed.version>
-        <tomcat.version>9.0.80</tomcat.version>
+        <ymate.maven.plugin.version>1.0.3-dev</ymate.maven.plugin.version>
+        <ymate.module.embed.version>1.0.4-dev</ymate.module.embed.version>
+        <tomcat.version>9.0.88</tomcat.version>
     </properties>
 
     <!--

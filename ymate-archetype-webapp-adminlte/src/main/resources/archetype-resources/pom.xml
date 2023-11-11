@@ -15,15 +15,15 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ymate.platform.version>2.1.2</ymate.platform.version>
+        <ymate.platform.version>2.1.3-dev</ymate.platform.version>
         <ymate.platform.test.version>1.0.1</ymate.platform.test.version>
-        <ymate.apidocs.version>2.0.1</ymate.apidocs.version>
-        <ymate.maven.plugin.version>1.0.2</ymate.maven.plugin.version>
+        <ymate.apidocs.version>2.0.2-dev</ymate.apidocs.version>
+        <ymate.maven.plugin.version>1.0.3-dev</ymate.maven.plugin.version>
         <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
-        <ymate.module.embed.version>1.0.3</ymate.module.embed.version>
-        <ymate.web.taglib.version>1.0.0</ymate.web.taglib.version>
+        <ymate.module.embed.version>1.0.4-dev</ymate.module.embed.version>
+        <ymate.web.taglib.version>1.0.1</ymate.web.taglib.version>
         <ymate.web.adminlte.assets.version>1.0.0</ymate.web.adminlte.assets.version>
-        <tomcat.version>9.0.80</tomcat.version>
+        <tomcat.version>9.0.88</tomcat.version>
     </properties>
 
     <profiles>
@@ -33,14 +33,16 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <envId>dev</envId>
                 <connection_url>jdbc:mysql://localhost:3306/db_name?useUnicode=true&amp;useSSL=false&amp;characterEncoding=UTF-8</connection_url>
                 <adapter_class>dbcp</adapter_class>
+                <log_level>debug</log_level>
             </properties>
         </profile>
     </profiles>
 
     <build>
-        <finalName>${artifactId}</finalName>
+        <finalName>${artifactId}-${envId}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -50,7 +52,18 @@
                     <exclude>**/ymp-*.properties</exclude>
                     -->
                     <exclude>**/ymp-conf_DEV.properties</exclude>
+                    <exclude>**/env/*/*.*</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/env/${envId}</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/classes</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/webapp/WEB-INF/cfgs</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/${project.build.finalName}/WEB-INF/cfgs</targetPath>
             </resource>
         </resources>
         <plugins>
@@ -97,10 +110,34 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.2</version>
+                <configuration>
+                    <appendAssemblyId>true</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <tarLongFileMode>gnu</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <warSourceExcludes>WEB-INF/cfgs/</warSourceExcludes>
                     <archive>
                         <manifest>
                             <mainClass>net.ymate.module.embed.Main</mainClass>
@@ -275,6 +312,12 @@
             <groupId>net.ymate.web</groupId>
             <artifactId>ymate-web-adminlte-assets</artifactId>
             <version>${ymate.web.adminlte.assets.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.ymate.platform</groupId>
+                    <artifactId>ymate-platform-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

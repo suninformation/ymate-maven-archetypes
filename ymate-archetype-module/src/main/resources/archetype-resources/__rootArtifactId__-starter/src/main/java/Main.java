@@ -7,6 +7,7 @@ import net.ymate.platform.core.IApplication;
 import net.ymate.platform.core.YMP;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Open Sesame!
@@ -16,7 +17,10 @@ import org.apache.commons.logging.LogFactory;
 public class Main {
 
     static {
-        System.setProperty(IApplication.SYSTEM_MAIN_CLASS, Starter.class.getName());
+        String mainClass = System.getProperty(IApplication.SYSTEM_MAIN_CLASS);
+        if (StringUtils.isBlank(mainClass)) {
+            System.setProperty(IApplication.SYSTEM_MAIN_CLASS, Starter.class.getName());
+        }
     }
 
     private static final Log LOG = LogFactory.getLog(Main.class);

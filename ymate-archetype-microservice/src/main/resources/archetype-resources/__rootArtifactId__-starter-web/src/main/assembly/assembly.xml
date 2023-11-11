@@ -1,0 +1,33 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${symbol_dollar}{project.basedir}/src/main/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/${project.build.finalName}</directory>
+            <outputDirectory>classes</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>/net/ymate/module/embed/*.class</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${symbol_dollar}{project.build.directory}/${symbol_dollar}{project.build.finalName}</directory>
+            <outputDirectory>webapp</outputDirectory>
+            <fileMode>0644</fileMode>
+            <excludes>
+                <exclude>/net/ymate/module/embed/*.class</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>

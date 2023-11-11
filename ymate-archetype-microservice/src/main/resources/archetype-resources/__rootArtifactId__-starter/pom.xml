@@ -16,24 +16,76 @@
     <url>https://www.ymate.net/</url>
     <description>YMP Microservice Starter Archetype</description>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <envId>dev</envId>
+                <log_level>debug</log_level>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <!--
+        <finalName>${artifactId}-${envId}-${version}</finalName>
+        -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
                 <excludes>
                     <!--
                     <exclude>**/ymp-*.properties</exclude>
                     -->
                     <exclude>**/ymp-conf_DEV.properties</exclude>
+                    <exclude>**/env/*/*.*</exclude>
                 </excludes>
-                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/env/${envId}</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/classes</targetPath>
             </resource>
             <resource>
                 <directory>src/main/cfgs</directory>
+                <filtering>true</filtering>
                 <targetPath>${project.build.directory}/cfgs</targetPath>
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${package}.Main</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>../lib/</classpathPrefix>
+                            <useUniqueVersions>false</useUniqueVersions>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@{*}</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -51,6 +103,9 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <tarLongFileMode>gnu</tarLongFileMode>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

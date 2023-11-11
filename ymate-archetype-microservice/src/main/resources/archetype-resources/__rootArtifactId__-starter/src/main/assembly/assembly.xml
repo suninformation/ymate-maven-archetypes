@@ -14,13 +14,22 @@
 			<fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>${symbol_dollar}{project.basedir}/src/main/cfgs</directory>
+			<directory>${symbol_dollar}{project.build.directory}</directory>
+			<outputDirectory>bin</outputDirectory>
+			<fileMode>0644</fileMode>
+			<includes>
+				<include>${project.build.finalName}.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${symbol_dollar}{project.build.directory}/cfgs</directory>
 			<outputDirectory>cfgs</outputDirectory>
 			<fileMode>0644</fileMode>
 		</fileSet>
 	</fileSets>
 	<dependencySets>
 		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
 			<outputDirectory>lib</outputDirectory>
 		</dependencySet>
 	</dependencySets>
