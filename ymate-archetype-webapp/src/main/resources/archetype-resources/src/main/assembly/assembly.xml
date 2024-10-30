@@ -2,20 +2,20 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <assembly>
-    <id>assembly</id>
+    <id>${symbol_dollar}{project.version}</id>
     <formats>
         <format>tar.gz</format>
     </formats>
-    <includeBaseDirectory>true</includeBaseDirectory>
+    <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
             <directory>${symbol_dollar}{project.basedir}/src/main/bin</directory>
-            <outputDirectory>bin</outputDirectory>
+            <outputDirectory>${symbol_dollar}{project.build.finalName}-${symbol_dollar}{project.version}/bin</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/${project.build.finalName}</directory>
-            <outputDirectory>classes</outputDirectory>
+            <outputDirectory>${symbol_dollar}{project.build.finalName}-${symbol_dollar}{project.version}/classes</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
                 <include>/net/ymate/module/embed/*.class</include>
@@ -23,7 +23,7 @@
         </fileSet>
         <fileSet>
             <directory>${symbol_dollar}{project.build.directory}/${symbol_dollar}{project.build.finalName}</directory>
-            <outputDirectory>webapp</outputDirectory>
+            <outputDirectory>${symbol_dollar}{project.build.finalName}-${symbol_dollar}{project.version}/webapp</outputDirectory>
             <fileMode>0644</fileMode>
             <excludes>
                 <exclude>/net/ymate/module/embed/*.class</exclude>

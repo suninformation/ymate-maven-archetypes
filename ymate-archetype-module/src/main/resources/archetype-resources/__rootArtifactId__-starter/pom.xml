@@ -107,6 +107,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <finalName>${artifactId}-${envId}-${version}</finalName>
                             <tarLongFileMode>gnu</tarLongFileMode>
                         </configuration>
                     </execution>
