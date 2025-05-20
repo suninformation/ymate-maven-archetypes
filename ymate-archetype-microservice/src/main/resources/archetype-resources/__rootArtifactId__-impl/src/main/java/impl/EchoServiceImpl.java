@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * IEchoService Interface Default Implementation.
  *
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 @PortService(value = IEchoService.class)
 public class EchoServiceImpl implements IEchoService {

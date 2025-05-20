@@ -7,7 +7,7 @@ import net.ymate.platform.core.annotation.EnableAutoScan;
 import net.ymate.platform.core.annotation.EnableBeanProxy;
 
 /**
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 @EnableAutoScan
 @EnableBeanProxy

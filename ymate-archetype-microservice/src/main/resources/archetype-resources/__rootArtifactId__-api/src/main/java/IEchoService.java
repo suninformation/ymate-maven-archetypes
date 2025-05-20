@@ -6,7 +6,7 @@ package ${package};
 /**
  * IEchoService Interface.
  *
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 public interface IEchoService {
 

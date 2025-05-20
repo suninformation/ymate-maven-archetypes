@@ -12,7 +12,7 @@ import net.ymate.platform.webmvc.view.View;
 /**
  * Open Sesame!
  *
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 @Controller
 @RequestMapping("/hello")

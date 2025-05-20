@@ -21,7 +21,8 @@
         <ymate.maven.plugin.version>1.0.2</ymate.maven.plugin.version>
         <ymate.module.websocket.version>2.0.0</ymate.module.websocket.version>
         <ymate.module.embed.version>1.0.3</ymate.module.embed.version>
-        <tomcat.version>9.0.88</tomcat.version>
+        <tomcat.version>9.0.104</tomcat.version>
+        <ecj.version>3.26.0</ecj.version>
     </properties>
 
     <profiles>
@@ -209,7 +210,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.jdt</groupId>
                                     <artifactId>ecj</artifactId>
-                                    <version>3.18.0</version>
+                                    <version>${ecj.version}</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.ymate.module</groupId>
@@ -265,12 +266,23 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>2.9.0</version>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.30.2</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.32</version>
+            <version>8.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Open Sesame!
  *
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 public class Main {
 

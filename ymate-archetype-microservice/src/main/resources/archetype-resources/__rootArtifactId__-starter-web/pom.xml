@@ -175,7 +175,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.jdt</groupId>
                                     <artifactId>ecj</artifactId>
-                                    <version>3.18.0</version>
+                                    <version>${ecj.version}</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.ymate.module</groupId>

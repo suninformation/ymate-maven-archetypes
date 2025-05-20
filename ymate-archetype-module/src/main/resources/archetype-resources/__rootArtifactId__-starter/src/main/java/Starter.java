@@ -9,7 +9,7 @@ import net.ymate.platform.core.annotation.EnableBeanProxy;
 /**
  * Main startup class.
  *
- * @author YMP (https://www.ymate.net/)
+ * @author YMP (<a href="https://www.ymate.net/">ymate.net</a>)
  */
 @EnableAutoScan
 @EnableBeanProxy

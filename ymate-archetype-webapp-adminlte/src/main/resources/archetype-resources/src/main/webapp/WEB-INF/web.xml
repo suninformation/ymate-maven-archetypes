@@ -103,22 +103,22 @@
 
     <error-page>
         <error-code>400</error-code>
-        <location>/WEB-INF/templates/error.jsp?status=400</location>
+        <location>/WEB-INF/templates/error.jsp?_sc=400</location>
     </error-page>
     <error-page>
         <error-code>401</error-code>
-        <location>/WEB-INF/templates/error.jsp?status=401</location>
+        <location>/WEB-INF/templates/error.jsp?_sc=401</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/templates/error.jsp?status=404</location>
+        <location>/WEB-INF/templates/error.jsp?_sc=404</location>
     </error-page>
     <error-page>
         <error-code>405</error-code>
-        <location>/WEB-INF/templates/error.jsp?status=405</location>
+        <location>/WEB-INF/templates/error.jsp?_sc=405</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/templates/error.jsp?status=500</location>
+        <location>/WEB-INF/templates/error.jsp?_sc=500</location>
     </error-page>
 </web-app>
