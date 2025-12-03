@@ -38,7 +38,7 @@ else
   # shellcheck disable=SC2002
   if [ -f "/proc/meminfo" ]; then
     memTotal=$(cat /proc/meminfo | grep MemTotal | awk '{printf "%d", $2/1024*0.75 }')
-    if [ "${memTotal}" -gt 60000 ]; then
+    if [ "${memTotal}" -gt 16000 ]; then
       JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} -Xms4g -Xmx4g"
       JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} -Xmn2g"
     else
